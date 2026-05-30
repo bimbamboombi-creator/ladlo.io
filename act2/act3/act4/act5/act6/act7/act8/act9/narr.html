@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>act9</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet"/>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  min-height: 100vh;
+  background: url(hn.jpg) center/cover no-repeat; 
+  display: flex; align-items: center; justify-content: center;
+  font-family: sans-serif;
+  position: relative;   
+}
+
+/* dark overlay so text stays readable */
+body::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: 0;
+}
+
+#stage {
+  width: 100%; max-width: 700px;
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 60px 32px;
+  text-align: center;
+  gap: 40px;
+  position: relative;
+  z-index: 1;   /* sits above the ::before overlay */
+}
+
+#line-box {
+  min-height: 140px;
+  display: flex; align-items: center; justify-content: center;
+}
+#line-text {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(22px, 4vw, 36px);
+  font-weight: 700;
+  color: #ff6badfe;
+  line-height: 1.5;
+  max-width: 600px;
+  text-shadow: 0 2px 12px rgb(255, 0, 183);  /* ← helps legibility */
+}
+
+.word {
+  display: inline-block;
+  margin-right: 0.22em;
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.45s ease, transform 0.45s ease;
+}
+.word.show { opacity: 1; transform: translateY(0); }
+
+#bar-wrap { width: 100%; max-width: 480px; height: 2px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden; }
+#bar { height: 100%; width: 0%; background: #f800ec; transition: width 0.5s ease; }
+
+#count { font-size: 12px; color: rgba(255,255,255,0.3); letter-spacing: 2px; }
+
+#btns { display: flex; gap: 12px; }
+button {
+  background: none;
+  border: 1px solid rgb(253, 0, 114);
+  border-radius: 8px;
+  color: #ff8ade;
+  font-size: 13px;
+  padding: 10px 28px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  letter-spacing: 0.5px;
+  position: relative;  
+  z-index: 2;
+}
+button:hover { background: rgba(255, 16, 151, 0.373); border-color: rgba(255,255,255,0.35); }
+button:disabled { opacity: 0.25; cursor: default; }
+</style>
+</head>
+<body>
+<div id="stage">
+  
+  <div id="count">1 / 7</div>
+  <div id="line-box"><div id="line-text"></div></div>
+  <div id="bar-wrap"><div id="bar"></div></div>
+  <div id="btns">
+    <button id="prev" disabled>← prev</button>
+    <button id="next">next →</button>
+    <button id="skip">next-ep</button>
+  </div>
+</div>
+<script>
+const lines=[
+  "soon you found youself in a new world, a world full of mysteries and adventures, a world where you are the hero of your own story.",
+  "beutifull leafs falling from the trees, a river flowing with crystal clear water, birds singing in the sky, and a gentle breeze caressing your face.",
+  "slime as bright as the sun, a cute bunny hopping around, a beautiful butterfly fluttering its wings, and a majestic deer grazing in the meadow.",
+  "u cant be more happy than this",
+  "but whtabt the world u from, the world u left behind, the world might not care, but what about the people u care about", 
+  "the people u left behind, the people might not care, but what about you, what about your feelings, your emotions, your thoughts, your memories.",
+  "your mothers smile, your fathers hug, your friends laughter, your siblings love, ur frds support, ur brothers care. dont u care.",
+  "do your best be the main charcter of your story, but they care abt u.",
+  "are u sure u want to leave them behind, are u sure u want to leave them alone, are u sure u want to leave them without you, are u sure u want to leave them without your love, your care, your support, your presence.",
+];
+let cur = 0;
+const txt = document.getElementById('line-text');  /* ← was missing */
+const bar = document.getElementById('bar');
+const count = document.getElementById('count');
+const nxt = document.getElementById('next');
+const prv = document.getElementById('prev');
+
+function show(i) {
+  txt.innerHTML = '';
+  lines[i].split(' ').forEach((w, j) => {
+    const s = document.createElement('span');
+    s.className = 'word';
+    s.textContent = w;
+    txt.appendChild(s);
+    setTimeout(() => s.classList.add('show'), 50 + j * 60);
+  });
+  bar.style.width = ((i + 1) / lines.length * 100) + '%';
+  count.textContent = (i + 1) + ' / ' + lines.length;
+  prv.disabled = i === 0;
+  nxt.disabled = i === lines.length - 1;
+  nxt.textContent = i === lines.length - 1 ? '✓ end' : 'next →';
+}
+
+function goNext() { if (cur < lines.length - 1) { cur++; show(cur); } }
+function goPrev() { if (cur > 0) { cur--; show(cur); } }
+
+nxt.onclick = goNext;
+prv.onclick = goPrev;
+
+document.addEventListener('keydown', (e) => { if (e.key === 'Enter') goNext(); });
+
+ document.getElementById('skip').addEventListener('click', () => {
+    window.location.href = 'act010/act2.html';   // 👈 change filename here
+  });
+
+show(0);
+</script>
+</body>
+</html>
