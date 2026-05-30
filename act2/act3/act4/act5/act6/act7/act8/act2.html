@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>act-8</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Lora:ital,wght@0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="act2.css" />
+</head>
+<body>
+
+<div id="game">
+
+  <!-- Background image -->
+  <div id="bg" style="background-image: url('room.gif');"></div>
+  <!-- Mood colour overlay -->
+  <div id="bg-overlay"></div>
+
+  <!-- Rain atmosphere -->
+  <div id="rain-layer"></div>
+
+  <!-- suvam (left) -->
+  <div class="character" id="char-suvam">
+    <div class="name-bubble name-bubble-suvam" id="name-suvam">suvambhai</div>
+    <img src="suvam.png" alt="suvambhai" />
+  </div>
+
+  <!-- doc (right) -->
+  <div class="character" id="char-doc">
+    <div class="name-bubble name-bubble-doc" id="name-doc">zee</div>
+    <img src="zee.png" alt="zee" />
+  </div>
+
+  <!-- Progress -->
+  <div id="progress-bar-wrap"><div id="progress-bar" style="width:0%"></div></div>
+
+  <!-- Skip -->
+  <button id="skip-btn">chorr do ▶▶</button>
+
+  <!-- Dialogue -->
+  <div id="dialogue-wrap">
+    <div id="dialogue-box">
+      <div id="speaker-name"></div>
+      <div id="dialogue-text"><span id="text-content"></span><span id="cursor"></span></div>
+      <div id="click-hint">▼ age badho</div>
+    </div>
+  </div>
+
+  <!-- Scene flash -->
+  <div id="scene-flash"></div>
+
+  <!-- Title overlay -->
+  <div id="overlay">
+    <div class="paw">🐾</div>
+    <h1>ghr ke  bahar<br><span>A Visual Novel</span></h1>
+    <p>meet up</p>
+    <button class="btn" id="start-btn">kahani suno ▶</button>
+  </div>
+</div>
+<script src="act2.js"></script>
+</body>
+</html>
